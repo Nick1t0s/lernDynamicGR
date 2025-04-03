@@ -1,0 +1,31 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Graph</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="graph" style="width: 800px; height: 600px;"></div>
+
+    <script>
+        function updateGraph() {
+            fetch('/data')
+                .then(response => response.json())
+                .then(data => {
+                    Plotly.react('graph', data, {
+                        title: 'Динамический график',
+                        xaxis: {title: 'Время'},
+                        yaxis: {title: 'Значение'}
+                    });
+                });
+        }
+
+        // Обновляем график каждую секунду
+        setInterval(updateGraph, 1000);
+
+        // Первоначальная загрузка графика
+        updateGraph();
+    </script>
+</body>
+</html>
